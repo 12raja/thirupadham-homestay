@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquiry received — Thirupadham Homestay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Martel:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="wrap">
+        <div class="brand">Thirupadham Homestay</div>
+        <div class="tagline">Semmedu · Near Isha Yoga Center</div>
+    </div>
+</header>
+
+<div class="status-page">
+    <h1>Enquiry received</h1>
+    <p>Thank you, <span th:text="${guestName}">Guest</span> — we've got your dates and will confirm availability over WhatsApp or a call shortly.</p>
+
+    <dl class="details">
+        <dt>Booking reference</dt>
+        <dd th:text="'#' + ${bookingId}">#1</dd>
+        <dt>Check-in</dt>
+        <dd th:text="${checkIn}">2026-08-01</dd>
+        <dt>Check-out</dt>
+        <dd th:text="${checkOut}">2026-08-03</dd>
+    </dl>
+
+    <a th:href="'https://wa.me/' + ${whatsappNumber}" class="btn btn-primary">Message us on WhatsApp</a>
+    <p style="margin-top:24px;"><a th:href="@{/}">&larr; Back to home</a></p>
+</div>
+
+<footer class="site-footer">
+    <div class="wrap">
+        <p>Thirupadham Homestay · Semmedu, Tamil Nadu 641114</p>
+    </div>
+</footer>
+
+</body>
+</html>

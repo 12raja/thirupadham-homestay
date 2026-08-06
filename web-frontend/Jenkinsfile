@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    triggers { pollSCM('* * * * *') }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        IMAGE_NAME = "rajdpz/web-frontend"
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+    }
+    stages {
+        stage('Build Docker Image') {
+            when { changeset "web-frontend/**" }
+            steps { sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest ./web-frontend" }
+        }
+        stage('Push to Docker Hub') {
+            when { changeset "web-frontend/**" }
+            steps {
+                sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "docker push ${IMAGE_NAME}:latest"
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            when { changeset "web-frontend/**" }
+            steps {
+                sh "kubectl set image deployment/web-frontend web-frontend=${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "kubectl rollout status deployment/web-frontend"
+            }
+        }
+    }
+}

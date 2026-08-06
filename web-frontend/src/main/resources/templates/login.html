@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin login — Thirupadham Homestay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Martel:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="wrap">
+        <div class="brand">Thirupadham Homestay</div>
+        <div class="tagline">Admin</div>
+    </div>
+</header>
+
+<div class="status-page">
+    <h1>Admin login</h1>
+    <form class="booking-form" method="post" th:action="@{/login}" style="text-align:left;">
+        <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <p th:if="${param.error}" style="color:var(--color-oxide); font-size:0.9rem;">Wrong username or password.</p>
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </form>
+    <p style="margin-top:24px;"><a th:href="@{/}">&larr; Back to home</a></p>
+</div>
+
+</body>
+</html>
