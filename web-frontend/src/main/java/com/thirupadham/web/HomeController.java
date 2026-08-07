@@ -3,6 +3,8 @@ package com.thirupadham.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,15 @@ public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
+    private static final List<String> WEEKDAY_KEYS = List.of(
+            "weekday.sun", "weekday.mon", "weekday.tue", "weekday.wed",
+            "weekday.thu", "weekday.fri", "weekday.sat"
+    );
+
     private final RestTemplate restTemplate;
     private final PhotoStorage photoStorage;
     private final CalendarBuilder calendarBuilder;
+    private final MessageSource messageSource;
 
     // Points at booking-service's Kubernetes Service name - same pattern
     // used for notification-service inside booking-service itself.
@@ -37,10 +45,12 @@ public class HomeController {
     @Value("${airbnb.listing-url:}")
     private String airbnbUrl;
 
-    public HomeController(RestTemplate restTemplate, PhotoStorage photoStorage, CalendarBuilder calendarBuilder) {
+    public HomeController(RestTemplate restTemplate, PhotoStorage photoStorage, CalendarBuilder calendarBuilder,
+                           MessageSource messageSource) {
         this.restTemplate = restTemplate;
         this.photoStorage = photoStorage;
         this.calendarBuilder = calendarBuilder;
+        this.messageSource = messageSource;
     }
 
     @GetMapping("/")
@@ -56,7 +66,9 @@ public class HomeController {
                 calendarBuilder.build(thisMonth),
                 calendarBuilder.build(thisMonth.plusMonths(1))
         ));
-        model.addAttribute("weekdayLabels", List.of("S", "M", "T", "W", "T", "F", "S"));
+        model.addAttribute("weekdayLabels", WEEKDAY_KEYS.stream()
+                .map(key -> messageSource.getMessage(key, null, LocaleContextHolder.getLocale()))
+                .toList());
 
         return "index";
     }

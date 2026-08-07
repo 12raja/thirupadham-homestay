@@ -1,5 +1,7 @@
 package com.thirupadham.web;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,11 @@ import java.io.IOException;
 public class AdminController {
 
     private final PhotoStorage photoStorage;
+    private final MessageSource messageSource;
 
-    public AdminController(PhotoStorage photoStorage) {
+    public AdminController(PhotoStorage photoStorage, MessageSource messageSource) {
         this.photoStorage = photoStorage;
+        this.messageSource = messageSource;
     }
 
     @GetMapping("/admin")
@@ -30,7 +34,7 @@ public class AdminController {
             try {
                 photoStorage.save(photo);
             } catch (IOException e) {
-                model.addAttribute("uploadError", "Couldn't save that photo - please try again.");
+                model.addAttribute("uploadError", messageSource.getMessage("admin.upload.error", null, LocaleContextHolder.getLocale()));
             }
         }
         model.addAttribute("photos", photoStorage.listLatest(50));

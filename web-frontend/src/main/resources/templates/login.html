@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin login — Thirupadham Homestay</title>
+    <title th:text="#{page.login.title}">Admin login — Thirupadham Homestay</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Martel:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -13,25 +13,28 @@
 <header class="site-header">
     <div class="wrap">
         <div class="brand">Thirupadham Homestay</div>
-        <div class="tagline">Admin</div>
+        <div class="tagline">
+            <span th:text="#{tagline.admin}">Admin</span>
+            <span class="lang-toggle"> · <a href="?lang=en">EN</a> / <a href="?lang=ta">தமிழ்</a></span>
+        </div>
     </div>
 </header>
 
 <div class="status-page">
-    <h1>Admin login</h1>
+    <h1 th:text="#{login.heading}">Admin login</h1>
     <form class="booking-form" method="post" th:action="@{/login}" style="text-align:left;">
         <div class="field">
-            <label for="username">Username</label>
+            <label for="username" th:text="#{login.label.username}">Username</label>
             <input type="text" id="username" name="username" required autofocus>
         </div>
         <div class="field">
-            <label for="password">Password</label>
+            <label for="password" th:text="#{login.label.password}">Password</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <p th:if="${param.error}" style="color:var(--color-oxide); font-size:0.9rem;">Wrong username or password.</p>
-        <button type="submit" class="btn btn-primary">Log in</button>
+        <p th:if="${param.error}" th:text="#{login.error}" style="color:var(--color-oxide); font-size:0.9rem;">Wrong username or password.</p>
+        <button type="submit" class="btn btn-primary" th:text="#{login.submit}">Log in</button>
     </form>
-    <p style="margin-top:24px;"><a th:href="@{/}">&larr; Back to home</a></p>
+    <p style="margin-top:24px;"><a th:href="@{/}" th:text="#{login.back}">&larr; Back to home</a></p>
 </div>
 
 </body>

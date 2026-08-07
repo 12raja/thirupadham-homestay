@@ -1,5 +1,6 @@
 package com.thirupadham.web;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -7,7 +8,6 @@ import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Component
 public class CalendarBuilder {
@@ -43,7 +43,7 @@ public class CalendarBuilder {
             weeks.add(days.subList(i, i + 7));
         }
 
-        String label = yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear();
+        String label = yearMonth.getMonth().getDisplayName(TextStyle.FULL, LocaleContextHolder.getLocale()) + " " + yearMonth.getYear();
         return new CalendarMonth(label, weeks);
     }
 }

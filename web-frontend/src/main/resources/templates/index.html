@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thirupadham Homestay — Peaceful Stay Near Isha Yoga Center</title>
-    <meta name="description" content="Clean, quiet rooms in Semmedu, an easy walk from Isha Yoga Center. Parking, family-friendly, and space to rest before or after your visit.">
+    <title th:text="#{page.home.title}">Thirupadham Homestay — Peaceful Stay Near Isha Yoga Center</title>
+    <meta name="description" th:content="#{page.home.description}" content="Clean, quiet rooms in Semmedu, an easy walk from Isha Yoga Center. Parking, family-friendly, and space to rest before or after your visit.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Martel:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -13,9 +13,9 @@
 
 <div id="welcomeOverlay" class="welcome-overlay" role="dialog" aria-label="Welcome message">
     <div class="welcome-card">
-        <button type="button" class="welcome-close" aria-label="Close welcome message" onclick="dismissWelcome()">&times;</button>
-        <h2>Welcome to Thirupadham Homestay</h2>
-        <p>We hope everything is well with you. Thank you for stopping by — we'd love to host your stay in Semmedu.</p>
+        <button type="button" class="welcome-close" th:aria-label="#{welcome.close.label}" aria-label="Close welcome message" onclick="dismissWelcome()">&times;</button>
+        <h2 th:text="#{welcome.heading}">Welcome to Thirupadham Homestay</h2>
+        <p th:text="#{welcome.body}">We hope everything is well with you. Thank you for stopping by — we'd love to host your stay in Semmedu.</p>
     </div>
 </div>
 <script>
@@ -31,7 +31,10 @@
 <header class="site-header">
     <div class="wrap">
         <div class="brand">Thirupadham Homestay</div>
-        <div class="tagline">Semmedu · Near Isha Yoga Center</div>
+        <div class="tagline">
+            <span th:text="#{tagline.main}">Semmedu · Near Isha Yoga Center</span>
+            <span class="lang-toggle"> · <a href="?lang=en">EN</a> / <a href="?lang=ta">தமிழ்</a></span>
+        </div>
     </div>
 </header>
 
@@ -39,26 +42,26 @@
 
 <section class="hero">
     <div class="wrap">
-        <h1>A quiet room in Semmedu, right by Isha Yoga Center</h1>
-        <p>Clean, spacious rooms and a calm courtyard — built for meditation visitors, families, and anyone passing through this part of Tamil Nadu.</p>
+        <h1 th:text="#{hero.heading}">A quiet room in Semmedu, right by Isha Yoga Center</h1>
+        <p th:text="#{hero.body}">Clean, spacious rooms and a calm courtyard — built for meditation visitors, families, and anyone passing through this part of Tamil Nadu.</p>
         <div class="cta-row">
-            <a href="#book" class="btn btn-primary">Send a booking enquiry</a>
-            <a th:href="'https://wa.me/' + ${whatsappNumber}" class="btn btn-outline">WhatsApp us</a>
+            <a href="#book" class="btn btn-primary" th:text="#{hero.cta.book}">Send a booking enquiry</a>
+            <a th:href="'https://wa.me/' + ${whatsappNumber}" class="btn btn-outline" th:text="#{hero.cta.whatsapp}">WhatsApp us</a>
         </div>
     </div>
 </section>
 
 <section class="about">
     <div class="wrap">
-        <h2 class="section-title">Welcome</h2>
-        <p class="section-lede">A homestay, not a hotel — a family runs this place, and it shows.</p>
-        <p>Thirupadham Homestay sits in Semmedu, an easy walk from Isha Yoga Center. Whether you're here for a program at the ashram, travelling with family, or just need a clean room and a quiet night in Tamil Nadu, this is a place to actually rest.</p>
+        <h2 class="section-title" th:text="#{about.heading}">Welcome</h2>
+        <p class="section-lede" th:text="#{about.lede}">A homestay, not a hotel — a family runs this place, and it shows.</p>
+        <p th:text="#{about.body}">Thirupadham Homestay sits in Semmedu, an easy walk from Isha Yoga Center. Whether you're here for a program at the ashram, travelling with family, or just need a clean room and a quiet night in Tamil Nadu, this is a place to actually rest.</p>
     </div>
 </section>
 
 <section class="gallery" th:if="${not #lists.isEmpty(galleryPhotos)}">
     <div class="wrap">
-        <h2 class="section-title">A look inside</h2>
+        <h2 class="section-title" th:text="#{gallery.heading}">A look inside</h2>
         <div class="gallery-grid"
              th:classappend="${galleryPhotos.size() == 1} ? 'gallery-grid--single' : (${galleryPhotos.size() < 5} ? 'gallery-grid--few' : '')">
             <div class="gallery-cell gallery-cell--large" onclick="openLightbox(0)">
@@ -70,7 +73,7 @@
                 <img th:src="@{${photo}}" alt="Thirupadham Homestay">
                 <div class="gallery-more-overlay"
                      th:if="${iter.index == 4 and galleryPhotos.size() > 5}"
-                     th:text="'+' + (${galleryPhotos.size()} - 5) + ' more'"></div>
+                     th:text="#{gallery.more(${galleryPhotos.size()} - 5)}">+more</div>
             </div>
         </div>
     </div>
@@ -107,28 +110,28 @@
 
 <section class="facilities">
     <div class="wrap">
-        <h2 class="section-title">What's here</h2>
-        <p class="section-lede">Four things we get right, every time.</p>
+        <h2 class="section-title" th:text="#{facilities.heading}">What's here</h2>
+        <p class="section-lede" th:text="#{facilities.lede}">Four things we get right, every time.</p>
         <div class="facilities-grid">
             <div class="facility-card">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="9" width="18" height="10" rx="1"/><path d="M3 9V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/><path d="M7 12h.01M7 15h.01"/></svg>
-                <h3>Comfortable Rooms</h3>
-                <p>Clean, spacious rooms built for rest, not just sleep.</p>
+                <h3 th:text="#{facility.rooms.title}">Comfortable Rooms</h3>
+                <p th:text="#{facility.rooms.body}">Clean, spacious rooms built for rest, not just sleep.</p>
             </div>
             <div class="facility-card">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>
-                <h3>Parking Facility</h3>
-                <p>Space for your car or bike, right on the property.</p>
+                <h3 th:text="#{facility.parking.title}">Parking Facility</h3>
+                <p th:text="#{facility.parking.body}">Space for your car or bike, right on the property.</p>
             </div>
             <div class="facility-card">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6M13 20c0-2.2 1.1-4.1 2.8-5.2"/></svg>
-                <h3>Family-Friendly</h3>
-                <p>Set up for kids, elders, and everyone in between.</p>
+                <h3 th:text="#{facility.family.title}">Family-Friendly</h3>
+                <p th:text="#{facility.family.body}">Set up for kids, elders, and everyone in between.</p>
             </div>
             <div class="facility-card">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11Z"/></svg>
-                <h3>Easy Access to Isha</h3>
-                <p>A short walk to the Isha Yoga Center gates.</p>
+                <h3 th:text="#{facility.isha.title}">Easy Access to Isha</h3>
+                <p th:text="#{facility.isha.body}">A short walk to the Isha Yoga Center gates.</p>
             </div>
         </div>
     </div>
@@ -136,13 +139,13 @@
 
 <section class="location">
     <div class="wrap">
-        <h2 class="section-title">Find us</h2>
-        <p class="section-lede">Set your GPS for Semmedu, right by the Isha campus.</p>
+        <h2 class="section-title" th:text="#{location.heading}">Find us</h2>
+        <p class="section-lede" th:text="#{location.lede}">Set your GPS for Semmedu, right by the Isha campus.</p>
         <address>
             Isha Yoga Center, 12/25, Sekkilar Street,<br>
             Semmedu, Tamil Nadu 641114
         </address>
-        <a href="https://www.google.com/search?q=thirupadham+homestay+ac+semmedu+address" class="btn btn-outline" target="_blank" rel="noopener">Open in Google Maps</a>
+        <a href="https://www.google.com/search?q=thirupadham+homestay+ac+semmedu+address" class="btn btn-outline" target="_blank" rel="noopener" th:text="#{location.maps}">Open in Google Maps</a>
     </div>
 </section>
 
@@ -150,12 +153,12 @@
 
 <section class="availability">
     <div class="wrap">
-        <h2 class="section-title">Check availability</h2>
-        <p class="section-lede">Synced automatically from our Airbnb calendar.</p>
+        <h2 class="section-title" th:text="#{availability.heading}">Check availability</h2>
+        <p class="section-lede" th:text="#{availability.lede}">Synced automatically from our Airbnb calendar.</p>
 
         <div class="calendar-legend">
-            <span class="legend-item"><span class="legend-dot legend-dot--open"></span> Available</span>
-            <span class="legend-item"><span class="legend-dot legend-dot--blocked"></span> Booked</span>
+            <span class="legend-item"><span class="legend-dot legend-dot--open"></span><span th:text="#{availability.legend.available}">Available</span></span>
+            <span class="legend-item"><span class="legend-dot legend-dot--blocked"></span><span th:text="#{availability.legend.booked}">Booked</span></span>
         </div>
 
         <div class="calendar-row">
@@ -173,57 +176,61 @@
             </div>
         </div>
 
-        <a th:if="${not #strings.isEmpty(airbnbUrl)}" th:href="${airbnbUrl}" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:20px;">View live on Airbnb</a>
+        <a th:if="${not #strings.isEmpty(airbnbUrl)}" th:href="${airbnbUrl}" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:20px;" th:text="#{availability.airbnb}">View live on Airbnb</a>
     </div>
 </section>
 
 <section class="booking" id="book">
     <div class="wrap">
-        <h2 class="section-title">Send an enquiry</h2>
-        <p class="section-lede">Tell us your dates — we'll confirm availability over WhatsApp or a call.</p>
+        <h2 class="section-title" th:text="#{booking.heading}">Send an enquiry</h2>
+        <p class="section-lede" th:text="#{booking.lede}">Tell us your dates — we'll confirm availability over WhatsApp or a call.</p>
 
         <form class="booking-form" th:action="@{/book}" th:object="${booking}" method="post">
             <div class="field">
-                <label for="guestName">Your name</label>
+                <label for="guestName" th:text="#{booking.label.name}">Your name</label>
                 <input type="text" id="guestName" th:field="*{guestName}" required minlength="2">
             </div>
             <div class="field">
-                <label for="phone">Phone number</label>
-                <div style="display:flex; gap:8px;">
+                <label for="phone" th:text="#{booking.label.phone}">Phone number</label>
+                <div class="inline-field-row">
                     <input type="tel" id="phone" th:field="*{phone}" required
                            inputmode="numeric" pattern="[0-9]{10}" maxlength="10"
-                           title="10-digit phone number, numbers only"
-                           oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); onPhoneChanged()"
-                           style="flex:1;">
-                    <button type="button" class="btn btn-secondary" onclick="sendOtp()" style="white-space:nowrap;">Send code</button>
+                           th:title="#{booking.phone.title}" title="10-digit phone number, numbers only"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); onPhoneChanged()">
+                    <button type="button" class="btn btn-secondary" onclick="sendOtp()" th:text="#{booking.otp.send}">Send code</button>
                 </div>
-                <div id="otpSection" style="display:none; margin-top:10px;">
-                    <input type="text" id="otpCode" placeholder="6-digit code" inputmode="numeric" maxlength="6"
-                           oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)"
-                           style="width:140px; margin-right:8px; padding:10px 12px; border:1px solid rgba(86,80,73,0.35); border-radius:var(--radius); background:var(--color-bg);">
-                    <button type="button" class="btn btn-secondary" onclick="verifyOtp()">Verify</button>
+                <div id="otpSection" class="inline-field-row otp-row" style="display:none;">
+                    <input type="text" id="otpCode" th:placeholder="#{booking.otp.placeholder}" placeholder="6-digit code" inputmode="numeric" maxlength="6"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)">
+                    <button type="button" class="btn btn-secondary" onclick="verifyOtp()" th:text="#{booking.otp.verify}">Verify</button>
                 </div>
-                <p id="otpStatus" style="font-size:0.85rem; margin-top:6px; color:var(--color-granite);"></p>
+                <p id="otpStatus" class="field-hint"></p>
             </div>
             <div class="form-row">
                 <div class="field">
-                    <label for="checkIn">Check-in</label>
+                    <label for="checkIn" th:text="#{field.checkin}">Check-in</label>
                     <input type="date" id="checkIn" th:field="*{checkIn}" required th:attr="min=${todayDate}"
                            onchange="document.getElementById('checkOut').min = this.value">
                 </div>
                 <div class="field">
-                    <label for="checkOut">Check-out</label>
+                    <label for="checkOut" th:text="#{field.checkout}">Check-out</label>
                     <input type="date" id="checkOut" th:field="*{checkOut}" required th:attr="min=${todayDate}">
                 </div>
             </div>
             <div class="field">
-                <label for="message">Anything we should know?</label>
-                <textarea id="message" th:field="*{message}" placeholder="Number of guests, arrival time, etc."></textarea>
+                <label for="message" th:text="#{booking.label.message}">Anything we should know?</label>
+                <textarea id="message" th:field="*{message}" th:placeholder="#{booking.message.placeholder}" placeholder="Number of guests, arrival time, etc."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Verify phone to send enquiry</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn" disabled th:text="#{booking.submit.locked}">Verify phone to send enquiry</button>
         </form>
 
-        <script>
+        <script th:inline="javascript">
+            const MSG_SUBMIT_LOCKED = /*[[#{booking.submit.locked}]]*/ 'Verify phone to send enquiry';
+            const MSG_SUBMIT_READY = /*[[#{booking.submit.ready}]]*/ 'Send enquiry';
+            const MSG_PHONE_INVALID = /*[[#{otp.phone.invalid}]]*/ 'Enter a valid 10-digit phone number first.';
+            const MSG_SENDING = /*[[#{otp.sending}]]*/ 'Sending code...';
+            const MSG_CHECKING = /*[[#{otp.checking}]]*/ 'Checking code...';
+
             let phoneVerified = false;
 
             function onPhoneChanged() {
@@ -238,7 +245,7 @@
             function updateSubmitButton() {
                 const btn = document.getElementById('submitBtn');
                 btn.disabled = !phoneVerified;
-                btn.textContent = phoneVerified ? 'Send enquiry' : 'Verify phone to send enquiry';
+                btn.textContent = phoneVerified ? MSG_SUBMIT_READY : MSG_SUBMIT_LOCKED;
             }
 
             function getCookie(name) {
@@ -250,10 +257,10 @@
                 const phone = document.getElementById('phone').value;
                 const status = document.getElementById('otpStatus');
                 if (!/^[0-9]{10}$/.test(phone)) {
-                    status.textContent = 'Enter a valid 10-digit number first.';
+                    status.textContent = MSG_PHONE_INVALID;
                     return;
                 }
-                status.textContent = 'Sending code...';
+                status.textContent = MSG_SENDING;
                 const res = await fetch('/api/otp/send', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')},
@@ -262,7 +269,7 @@
                 const data = await res.json();
                 status.textContent = data.message;
                 if (data.success) {
-                    document.getElementById('otpSection').style.display = 'block';
+                    document.getElementById('otpSection').style.display = 'flex';
                 }
             }
 
@@ -270,7 +277,7 @@
                 const phone = document.getElementById('phone').value;
                 const code = document.getElementById('otpCode').value;
                 const status = document.getElementById('otpStatus');
-                status.textContent = 'Checking code...';
+                status.textContent = MSG_CHECKING;
                 const res = await fetch('/api/otp/check', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')},
@@ -287,9 +294,9 @@
 
 <footer class="site-footer">
     <div class="wrap">
-        <p>Thirupadham Homestay · Semmedu, Tamil Nadu 641114</p>
-        <p><a th:href="'https://wa.me/' + ${whatsappNumber}">WhatsApp</a> · booking enquiries answered directly</p>
-        <p style="margin-top:12px; opacity:0.7; font-size:0.85rem;">&copy; 2026 Thirupadham Homestay. All rights reserved.</p>
+        <p th:text="#{footer.address}">Thirupadham Homestay · Semmedu, Tamil Nadu 641114</p>
+        <p><a th:href="'https://wa.me/' + ${whatsappNumber}" th:text="#{footer.whatsapp}">WhatsApp</a> <span th:text="#{footer.whatsapp.suffix}">· booking enquiries answered directly</span></p>
+        <p style="margin-top:12px; opacity:0.7; font-size:0.85rem;" th:text="#{footer.copyright}">&copy; 2026 Thirupadham Homestay. All rights reserved.</p>
     </div>
 </footer>
 

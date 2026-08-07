@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquiry not sent — Thirupadham Homestay</title>
+    <title th:text="#{page.error.title}">Enquiry not sent — Thirupadham Homestay</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Martel:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -13,21 +13,24 @@
 <header class="site-header">
     <div class="wrap">
         <div class="brand">Thirupadham Homestay</div>
-        <div class="tagline">Semmedu · Near Isha Yoga Center</div>
+        <div class="tagline">
+            <span th:text="#{tagline.main}">Semmedu · Near Isha Yoga Center</span>
+            <span class="lang-toggle"> · <a href="?lang=en">EN</a> / <a href="?lang=ta">தமிழ்</a></span>
+        </div>
     </div>
 </header>
 
 <div class="status-page">
-    <h1>We couldn't send that enquiry</h1>
-    <p>The booking system didn't respond just now. Nothing was lost on your end — please try again in a moment, or reach us directly instead.</p>
+    <h1 th:text="#{error.heading}">We couldn't send that enquiry</h1>
+    <p th:text="#{error.body}">The booking system didn't respond just now. Nothing was lost on your end — please try again in a moment, or reach us directly instead.</p>
 
-    <a th:href="'https://wa.me/' + ${whatsappNumber}" class="btn btn-primary">Message us on WhatsApp</a>
-    <p style="margin-top:24px;"><a th:href="@{/}">&larr; Back to home</a></p>
+    <a th:href="'https://wa.me/' + ${whatsappNumber}" class="btn btn-primary" th:text="#{error.whatsapp}">Message us on WhatsApp</a>
+    <p style="margin-top:24px;"><a th:href="@{/}" th:text="#{error.back}">&larr; Back to home</a></p>
 </div>
 
 <footer class="site-footer">
     <div class="wrap">
-        <p>Thirupadham Homestay · Semmedu, Tamil Nadu 641114</p>
+        <p th:text="#{footer.address}">Thirupadham Homestay · Semmedu, Tamil Nadu 641114</p>
     </div>
 </footer>
 
